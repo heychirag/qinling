@@ -45,8 +45,10 @@ class QinlingClient(client_base.QinlingClientBase):
 
         return resp, body
 
-    def create_runtime(self, image, name=None, is_public=True):
-        req_body = {"image": image, "is_public": is_public}
+    def create_runtime(self, image, name=None, replicas=None, is_public=True):
+        req_body = {"image": image,
+                    "is_public": is_public,
+                    "replicas": replicas}
 
         if name:
             req_body.update({'name': name})

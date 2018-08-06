@@ -246,6 +246,7 @@ class Runtime(Resource):
     project_id = wsme.wsattr(wtypes.text, readonly=True)
     created_at = wsme.wsattr(wtypes.text, readonly=True)
     updated_at = wsme.wsattr(wtypes.text, readonly=True)
+    replicas = wsme.wsattr(int)
 
 
 class Runtimes(ResourceList):

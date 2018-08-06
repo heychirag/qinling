@@ -24,7 +24,10 @@ class RuntimesTest(base.BaseQinlingTest):
     @decorators.idempotent_id('fdc2f07f-dd1d-4981-86d3-5bc7908d9a9b')
     def test_crud_runtime(self):
         name = data_utils.rand_name('runtime', prefix=self.name_prefix)
-        resp, body = self.admin_client.create_runtime(self.image, name)
+        replicas = 5
+        resp, body = self.admin_client.create_runtime(self.image,
+                                                      name,
+                                                      replicas)
 
         self.assertEqual(201, resp.status)
         self.assertEqual(name, body['name'])
@@ -60,8 +63,9 @@ class RuntimesTest(base.BaseQinlingTest):
         projects.
         """
         name = data_utils.rand_name('runtime', prefix=self.name_prefix)
+        replicas = 5
         resp, body = self.admin_client.create_runtime(
-            self.image, name, is_public=False
+            self.image, name, replicas, is_public=False
         )
 
         self.assertEqual(201, resp.status)

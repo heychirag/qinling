@@ -29,6 +29,7 @@ class Runtime(model_base.QinlingSecureModelBase):
     status = sa.Column(sa.String(32), nullable=False)
     is_public = sa.Column(sa.BOOLEAN, default=True)
     trusted = sa.Column(sa.BOOLEAN, default=True)
+    replicas = sa.Column(sa.Integer)
 
 
 class Function(model_base.QinlingSecureModelBase):

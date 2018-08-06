@@ -156,12 +156,12 @@ class KubernetesManager(base.OrchestratorBase):
 
         return {"total": total, "available": available}
 
-    def create_pool(self, name, image, trusted=True):
+    def create_pool(self, name, image, replicas, trusted=True):
         deployment_body = self.deployment_template.render(
             {
                 "name": name,
                 "labels": {'runtime_id': name},
-                "replicas": self.conf.kubernetes.replicas,
+                "replicas": replicas or self.conf.kubernetes.replicas,
                 "container_name": 'worker',
                 "image": image,
                 "sidecar_image": self.conf.engine.sidecar_image,

@@ -44,6 +44,7 @@ class DefaultEngine(object):
                 self.orchestrator.create_pool(
                     runtime_id,
                     runtime.image,
+                    runtime.replicas,
                     trusted=runtime.trusted
                 )
                 runtime.status = status.AVAILABLE
