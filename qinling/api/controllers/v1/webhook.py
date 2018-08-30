@@ -107,22 +107,25 @@ class WebhooksController(rest.RestController):
             raise exc.InputException(
                 'Either function_alias or function_id must be provided.'
             )
-
+        
+        function_id = params.get('function_id')  
+        
         # if function_alias provided
         function_alias = params.get('function_alias')
         if function_alias:
             alias_db = db_api.get_function_alias(function_alias)
             function_id = alias_db.function_id
-            version = alias_db.function_version
-            params.update({'function_id': function_id,
-                           'function_version': version})
+        
+        # Even admin user can not expose normal user's function
+        function_db = db_api.get_function(function_id, insecure=False)
+        version = params.get('function_version', 0)
+        if version == 0
+            version = function_db.latest_version
+        params.update({'function_id': function_id,
+                       'function_version': version})
 
         LOG.info("Creating %s, params: %s", self.type, params)
 
-        # Even admin user can not expose normal user's function
-        db_api.get_function(params['function_id'], insecure=False)
-
-        version = params.get('function_version', 0)
         if version > 0:
             db_api.get_function_version(params['function_id'], version)
 
